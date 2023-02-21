@@ -9,7 +9,7 @@ export default function MealItemForm(props) {
     event.preventDefault();
     const quantity=document.getElementById('amount_' + props.id).value;
     cardctx.addItem({...props.item,quantity:quantity});
-   console.log('inside add cart',cardctx)
+   
 
   }
 
@@ -17,7 +17,7 @@ export default function MealItemForm(props) {
     <>
     
     <form className={classes.form}>
-      {console.log('inside render',cardctx.items)}
+      
      <Input label="Quantity" input={{
        id: 'amount_' + props.id,
       type:'number',

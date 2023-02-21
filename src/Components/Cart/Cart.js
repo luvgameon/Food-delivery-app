@@ -6,8 +6,13 @@ import CartItem from './CartItem';
 
 const Cart = (props) => {
   const Cardctx=useContext(CartContext);
-  const addcartItem=(item)=>{};
-  const removecartItem=(id)=>{};
+  const cartItemRemoveHandler = (id) => {
+    Cardctx.removeItem(id);
+  };
+
+  const cartItemAddHandler = (item) => {
+    Cardctx.addItem({...item, quantity: 1});
+  };
   const cartItems = (
     <ul className={classes['cart-items']}>
       { 
@@ -15,15 +20,15 @@ const Cart = (props) => {
     
       
       Cardctx.items.map((item) => (
-       
+  
       
         <CartItem 
         key={item.id}
         name={item.name}
         amount={item.quantity}
         price={item.price}
-        onRemove={addcartItem.bind(null,item.id)}
-        onAdd={removecartItem.bind(null,item)}
+        onRemove={cartItemRemoveHandler.bind(null,item.id)}
+        onAdd={cartItemAddHandler.bind(null,item)}
         /> 
        
       ))}
@@ -31,7 +36,7 @@ const Cart = (props) => {
   );
   let totalamount=0
   Cardctx.items.forEach(item=>{
-    totalamount=totalamount+ (Number(item.quantity)*Number(item.price));
+    totalamount=totalamount+ (item.quantity)*(item.price);
    
 
   })
@@ -44,7 +49,7 @@ const Cart = (props) => {
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
-        <span>{totalamount}</span>
+        <span>{totalamount.toFixed(2)}</span>
       </div>
       <div className={classes.actions}>
         <button className={classes['button--alt']} onClick={props.onClose}>
